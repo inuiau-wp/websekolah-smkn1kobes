@@ -1,58 +1,60 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Web SMKN 1 Kota Besi
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website resmi **SMKN 1 Kotabesi** — portal informasi sekolah dengan 3 jurusan unggulan dan dashboard multi-role untuk pengelolaan konten.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Halaman Publik
+- **Beranda** — hero, carousel kegiatan, statistik sekolah, kartu 3 jurusan, berita & galeri unggulan
+- **Profil Sekolah** `/profil` — visi-misi, dewan guru (dengan tombol *Kunjungi Halaman* ke halaman pribadi guru), cover & logo dinamis
+- **Jurusan** `/jurusan` — ATP, TKJ, AKL: deskripsi, kompetensi, visi-misi, kepala jurusan
+- **Berita & Pengumuman** `/berita` — filter kategori: Berita, Pengumuman, Agenda, **Modul Materi**, **Tutorial**
+- **Galeri** `/galeri` & **Kontak** `/kontak` (map lokasi + pesan masuk ke admin)
+- **Halaman Pribadi Guru** `/guru/{id}` — biodata (tanpa NIP), CV tertulis guru, prestasi, artikel/modul guru
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Dashboard Multi-Role
+| Role | Kemampuan |
+|---|---|
+| **Admin** | Kelola konten home, profile sekolah (logo, cover, koordinat map), jurusan, berita, galeri, pesan kontak, akun guru/siswa |
+| **Guru** | Berita/modul milik sendiri, galeri, jurusan yang dipimpin (kepala program), halaman pribadi (CV, prestasi, headline) |
+| **Siswa** | Pengumuman & agenda sekolah |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Sistem Posting Berita
+- Rich text editor **TinyMCE** (format, tabel, blok kode, perataan, ukuran gambar)
+- Kategori: Berita · Pengumuman · Agenda · **Modul Materi** · **Tutorial**
+- Lampiran materi: **.md** (dikonversi ke editor) · **.pdf** (ter-embed) · **.docx** (tombol unduh)
+- Upload gambar konten (jpg/png/webp/bmp/avif) + paste screenshot
+- Embed **YouTube/Vimeo** (paste link) & **post Instagram** (tombol Embed)
+- Konten disanitasi otomatis saat disimpan (anti-XSS)
 
-## Learning Laravel
+## Teknologi
+- Laravel 13 (PHP 8.3+) + Blade + Tailwind CSS v4
+- TinyMCE 7, league/commonmark (Markdown→HTML), Vite
+- MySQL/MariaDB — auth via Laravel Breeze
+- Tests: PHPUnit/Pest — 158 pengujian
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+## Instalasi Lokal
 ```bash
-composer require laravel/boost --dev
+composer install
+npm install
+cp .env.example .env   # isi DB, lalu:
+php artisan key:generate
+php artisan migrate --seed   # seed 3 jurusan + 1 admin
+php artisan storage:link
+npm run dev        # aset dev
+# atau:
+npm run build      # aset produksi
+```
+URL lokal: `http://smkn1kotabesi.test` (FlyEnv + Apache2)
 
-php artisan boost:install
+## Struktur Ringkas
+```
+app/Http/Controllers/Admin|Guru|Siswa   # dashboard per role
+resources/views                         # Blade (publik + dashboard)
+routes/web.php                          # rute publik & dashboard
+DATABASE.md, DEPLOY.md, DESAIN.md       # dokumentasi internal (tidak di-publish)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Keamanan
+- Password default seeder hanya untuk lokasi dev (`migrate --seed`); ganti segera di produksi
+- `.env` tidak pernah disertakan dalam repo — buat manual di server
