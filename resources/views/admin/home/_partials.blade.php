@@ -1,0 +1,1 @@
+@php $activeBadge = fn ($active) => '<span class="px-2 py-0.5 rounded-full '.($active ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-200 text-gray-500').' text-xs font-semibold">'.($active ? 'Aktif' : 'Non-aktif').'</span>' @endphp
