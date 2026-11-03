@@ -36,6 +36,17 @@ Thumbs.db
 /CLAUDE.md
 /CHECKPOINT.md
 /DASHBOARD_PLAN.md
+
+# Dokumentasi internal proyek (tidak di-publish)
+/DATABASE.md
+/DEPLOY.md
+/DESAIN.md
+/ENV.md
+/FITUR.md
+/HALAMAN.md
+/ROLE_PENGGUNA.md
+/SPEK_PROYEK.md
+
 /.mcp.json
 /boost.json
 /opencode.json
