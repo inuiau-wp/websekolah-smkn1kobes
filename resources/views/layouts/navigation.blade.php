@@ -13,52 +13,52 @@
             </div>
 
             <!-- Desktop menu -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('home') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">
-                    <i class="fa-solid fa-house w-4 mr-1"></i>Beranda
+            <div class="hidden md:flex items-center space-x-5 xl:space-x-6">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                    <i class="fa-solid fa-house w-4 text-center"></i>Beranda
                 </a>
 
-                <a href="{{ route('profil') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">
-                    <i class="fa-solid fa-school w-4 mr-1"></i>Profil Sekolah
+                <a href="{{ route('profil') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                    <i class="fa-solid fa-school w-4 text-center"></i>Profil Sekolah
                 </a>
 
                 <!-- Jurusan dropdown -->
                 <div class="relative group">
-                    <button class="text-gray-900 hover:text-gray-600 font-medium flex items-center gap-1 transition-colors">
-                        <i class="fa-solid fa-graduation-cap w-4 mr-1"></i>Jurusan
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <button class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                        <i class="fa-solid fa-graduation-cap w-4 text-center"></i>Jurusan
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <!-- Wrapper nempel ke tombol (pt-2 = jembatan hover, bukan gap) -->
                     <div class="absolute left-0 top-full pt-2">
                         <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
                         @foreach($jurusan as $j)
-                            <a href="{{ route('jurusan.show', $j->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                                <i class="fa-solid {{ match ($j->slug) { 'atp' => 'fa-seedling', 'tkj' => 'fa-network-wired', 'akl' => 'fa-calculator', default => 'fa-sitemap' } }} w-4 mr-2 text-gray-400"></i>{{ $j->code }} - {{ $j->name }}
+                            <a href="{{ route('jurusan.show', $j->slug) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                <i class="fa-solid {{ match ($j->slug) { 'atp' => 'fa-seedling', 'tkj' => 'fa-network-wired', 'akl' => 'fa-calculator', default => 'fa-sitemap' } }} w-4 text-center text-gray-400"></i>{{ $j->code }} - {{ $j->name }}
                             </a>
                         @endforeach
                         </div>
                     </div>
                 </div>
 
-                <a href="{{ route('news.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">
-                    <i class="fa-solid fa-newspaper w-4 mr-1"></i>Berita & Pengumuman
+                <a href="{{ route('news.index') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                    <i class="fa-solid fa-newspaper w-4 text-center"></i>Berita & Pengumuman
                 </a>
-                <a href="{{ route('gallery.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">
-                    <i class="fa-solid fa-images w-4 mr-1"></i>Galeri
+                <a href="{{ route('gallery.index') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                    <i class="fa-solid fa-images w-4 text-center"></i>Galeri
                 </a>
 
                 @if ($raporYears->isNotEmpty())
                     <!-- Rapor Pendidikan dropdown (tahun rilis) -->
                     <div class="relative group">
-                        <button class="text-gray-900 hover:text-gray-600 font-medium flex items-center gap-1 transition-colors">
-                            <i class="fa-solid fa-ranking-star w-4 mr-1"></i>Rapor Pendidikan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <button class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                            <i class="fa-solid fa-ranking-star w-4 text-center"></i>Rapor Pendidikan
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="absolute left-0 top-full pt-2">
                             <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
                                 @foreach ($raporYears as $raporYear)
-                                    <a href="{{ route('rapor.show', $raporYear) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                                        <i class="fa-solid fa-chart-column w-4 mr-2 text-gray-400"></i>Tahun Rapor {{ $raporYear }}
+                                    <a href="{{ route('rapor.show', $raporYear) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                        <i class="fa-solid fa-chart-column w-4 text-center text-gray-400"></i>Tahun Rapor {{ $raporYear }}
                                     </a>
                                 @endforeach
                             </div>
@@ -66,8 +66,8 @@
                     </div>
                 @endif
 
-                <a href="{{ route('contact.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">
-                    <i class="fa-solid fa-location-dot w-4 mr-1"></i>Kontak & Lokasi
+                <a href="{{ route('contact.index') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium transition-colors">
+                    <i class="fa-solid fa-location-dot w-4 text-center"></i>Kontak & Lokasi
                 </a>
             </div>
 
@@ -82,11 +82,11 @@
                             default => route('dashboard'),
                         };
                     @endphp
-                    <a href="{{ $userDashboardRoute }}" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"><i class="fa-solid fa-gauge-high w-4 mr-1"></i>Dashboard</a>
+                    <a href="{{ $userDashboardRoute }}" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"><i class="fa-solid fa-gauge-high w-4 text-center"></i>Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-900 hover:text-gray-600 font-medium text-sm transition-colors"><i class="fa-solid fa-right-to-bracket w-4 mr-1"></i>Masuk</a>
+                    <a href="{{ route('login') }}" class="flex items-center gap-2 whitespace-nowrap text-gray-900 hover:text-gray-600 font-medium text-sm transition-colors"><i class="fa-solid fa-right-to-bracket w-4 text-center"></i>Masuk</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"><i class="fa-solid fa-user-plus w-4 mr-1"></i>Daftar</a>
+                        <a href="{{ route('register') }}" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"><i class="fa-solid fa-user-plus w-4 text-center"></i>Daftar</a>
                     @endif
                 @endauth
             </div>
@@ -102,41 +102,41 @@
         </div>
         <div id="mobile-menu" class="hidden">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-house w-5 mr-2 text-gray-400"></i>Beranda</a>
-                <a href="{{ route('profil') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-school w-5 mr-2 text-gray-400"></i>Profil Sekolah</a>
+                <a href="{{ route('home') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-house w-5 text-center text-gray-400"></i>Beranda</a>
+                <a href="{{ route('profil') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-school w-5 text-center text-gray-400"></i>Profil Sekolah</a>
                 <div class="relative">
                     <button id="mobile-jurusan-button" class="flex w-full items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                        <span><i class="fa-solid fa-graduation-cap w-5 mr-2 text-gray-400"></i>Jurusan</span>
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-graduation-cap w-5 text-center text-gray-400"></i>Jurusan</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="mobile-jurusan-list" class="hidden pl-4 space-y-1">
                         @foreach($jurusan as $j)
-                            <a href="{{ route('jurusan.show', $j->slug) }}" class="block px-3 py-1.5 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                                <i class="fa-solid {{ match ($j->slug) { 'atp' => 'fa-seedling', 'tkj' => 'fa-network-wired', 'akl' => 'fa-calculator', default => 'fa-sitemap' } }} w-4 mr-2 text-gray-400"></i>{{ $j->code }} - {{ $j->name }}
+                            <a href="{{ route('jurusan.show', $j->slug) }}" class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                <i class="fa-solid {{ match ($j->slug) { 'atp' => 'fa-seedling', 'tkj' => 'fa-network-wired', 'akl' => 'fa-calculator', default => 'fa-sitemap' } }} w-4 text-center text-gray-400"></i>{{ $j->code }} - {{ $j->name }}
                             </a>
                         @endforeach
                     </div>
                 </div>
-                <a href="{{ route('news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-newspaper w-5 mr-2 text-gray-400"></i>Berita & Pengumuman</a>
-                <a href="{{ route('gallery.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-images w-5 mr-2 text-gray-400"></i>Galeri</a>
+                <a href="{{ route('news.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-newspaper w-5 text-center text-gray-400"></i>Berita & Pengumuman</a>
+                <a href="{{ route('gallery.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-images w-5 text-center text-gray-400"></i>Galeri</a>
 
                 @if ($raporYears->isNotEmpty())
                     <div class="relative">
                         <button id="mobile-rapor-button" class="flex w-full items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                            <span><i class="fa-solid fa-ranking-star w-5 mr-2 text-gray-400"></i>Rapor Pendidikan</span>
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-ranking-star w-5 text-center text-gray-400"></i>Rapor Pendidikan</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="mobile-rapor-list" class="hidden pl-4 space-y-1">
                             @foreach ($raporYears as $raporYear)
-                                <a href="{{ route('rapor.show', $raporYear) }}" class="block px-3 py-1.5 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                                    <i class="fa-solid fa-chart-column w-4 mr-2 text-gray-400"></i>Tahun Rapor {{ $raporYear }}
+                                <a href="{{ route('rapor.show', $raporYear) }}" class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                    <i class="fa-solid fa-chart-column w-4 text-center text-gray-400"></i>Tahun Rapor {{ $raporYear }}
                                 </a>
                             @endforeach
                         </div>
                     </div>
                 @endif
 
-                <a href="{{ route('contact.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-location-dot w-5 mr-2 text-gray-400"></i>Kontak & Lokasi</a>
+                <a href="{{ route('contact.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-location-dot w-5 text-center text-gray-400"></i>Kontak & Lokasi</a>
                 @auth
                     @php
                         $userDashboardRoute = match(auth()->user()->role) {
@@ -146,11 +146,11 @@
                             default => route('dashboard'),
                         };
                     @endphp
-                    <a href="{{ $userDashboardRoute }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-gauge-high w-5 mr-2 text-gray-400"></i>Dashboard</a>
+                    <a href="{{ $userDashboardRoute }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-gauge-high w-5 text-center text-gray-400"></i>Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-right-to-bracket w-5 mr-2 text-gray-400"></i>Masuk</a>
+                    <a href="{{ route('login') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-right-to-bracket w-5 text-center text-gray-400"></i>Masuk</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-user-plus w-5 mr-2 text-gray-400"></i>Daftar</a>
+                        <a href="{{ route('register') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"><i class="fa-solid fa-user-plus w-5 text-center text-gray-400"></i>Daftar</a>
                     @endif
                 @endauth
             </div>
