@@ -50,3 +50,7 @@ Thumbs.db
 /.mcp.json
 /boost.json
 /opencode.json
+
+# Dokumen panduan internal
+/PANDUAN_RAPOR_PENDIDIKAN_2025.md
+
