@@ -21,7 +21,7 @@
             </div>
 
             <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                Transparansi Mutu &amp; Relevansi Vokasi {{ $schoolProfile->school_name }}
+                {{ $rapor->title }}
             </h1>
             <p class="text-white/85 max-w-3xl leading-relaxed">
                 Disajikan sesuai amanat UU No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik (UU KIP)

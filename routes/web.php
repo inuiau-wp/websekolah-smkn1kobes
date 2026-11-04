@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeContentController;
+use App\Http\Controllers\Admin\RaporPendidikanController;
 use App\Http\Controllers\Admin\SchoolProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactController;
@@ -69,6 +70,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('gallery', App\Http\Controllers\Admin\GalleryController::class)
         ->except(['show']); // detail foto = lightbox di halaman publik
+
+    // Fase 8i — Kelola Rapor Pendidikan (publikasi etis per tahun)
+    Route::resource('rapor-pendidikan', RaporPendidikanController::class)
+        ->except(['show'])
+        ->parameters(['rapor-pendidikan' => 'rapor_pendidikan']);
 
     Route::get('home', [HomeContentController::class, 'index'])->name('home.index');
     Route::post('home/settings', [HomeContentController::class, 'updateSettings'])->name('home.settings');
