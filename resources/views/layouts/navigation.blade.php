@@ -38,6 +38,26 @@
 
                 <a href="{{ route('news.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">Berita & Pengumuman</a>
                 <a href="{{ route('gallery.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">Galeri</a>
+
+                @if ($raporYears->isNotEmpty())
+                    <!-- Rapor Pendidikan dropdown (tahun rilis) -->
+                    <div class="relative group">
+                        <button class="text-gray-900 hover:text-gray-600 font-medium flex items-center gap-1 transition-colors">
+                            Rapor Pendidikan
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="absolute left-0 top-full pt-2">
+                            <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
+                                @foreach ($raporYears as $raporYear)
+                                    <a href="{{ route('rapor.show', $raporYear) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                        Tahun Rapor {{ $raporYear }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <a href="{{ route('contact.index') }}" class="text-gray-900 hover:text-gray-600 font-medium transition-colors">Kontak & Lokasi</a>
             </div>
 
@@ -89,6 +109,23 @@
                 </div>
                 <a href="{{ route('news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">Berita & Pengumuman</a>
                 <a href="{{ route('gallery.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">Galeri</a>
+
+                @if ($raporYears->isNotEmpty())
+                    <div class="relative">
+                        <button id="mobile-rapor-button" class="flex w-full items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                            Rapor Pendidikan
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="mobile-rapor-list" class="hidden pl-4 space-y-1">
+                            @foreach ($raporYears as $raporYear)
+                                <a href="{{ route('rapor.show', $raporYear) }}" class="block px-3 py-1.5 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                    Tahun Rapor {{ $raporYear }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
                 <a href="{{ route('contact.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">Kontak & Lokasi</a>
                 @auth
                     @php
@@ -120,5 +157,10 @@
     // Mobile jurusan dropdown toggle
     document.getElementById('mobile-jurusan-button')?.addEventListener('click', function () {
         document.getElementById('mobile-jurusan-list')?.classList.toggle('hidden');
+    });
+
+    // Mobile rapor pendidikan dropdown toggle
+    document.getElementById('mobile-rapor-button')?.addEventListener('click', function () {
+        document.getElementById('mobile-rapor-list')?.classList.toggle('hidden');
     });
 </script>

@@ -14,6 +14,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NewsImageUploadController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RaporController;
 use App\Http\Controllers\SekolahController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,11 @@ Route::get('/guru/{user}', [GuruPageController::class, 'show'])
 
 Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan.index');
 Route::get('/jurusan/{jurusan:slug}', [JurusanController::class, 'show'])->name('jurusan.show');
+
+// Rapor Pendidikan (publik) — /rapor-pendidikan/{tahun}
+Route::get('/rapor-pendidikan/{year}', [RaporController::class, 'show'])
+    ->whereNumber('year')
+    ->name('rapor.show');
 
 // Fase 8i — bahasa aplikasi ditetapkan Indonesia saja (switcher ID/EN dihapus)
 

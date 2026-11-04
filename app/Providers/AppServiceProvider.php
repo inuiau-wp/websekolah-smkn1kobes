@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Jurusan;
+use App\Models\RaporPendidikan;
 use App\Models\SchoolProfile;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -32,7 +33,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('layouts.navigation', function ($view) {
-            $view->with('jurusan', Jurusan::all());
+            $view->with([
+                'jurusan' => Jurusan::all(),
+                'raporYears' => RaporPendidikan::published()
+                    ->orderByDesc('year')
+                    ->pluck('year'),
+            ]);
         });
     }
 }
