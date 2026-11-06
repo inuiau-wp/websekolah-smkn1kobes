@@ -71,6 +71,11 @@
                         </button>
                         <div class="absolute left-0 top-full pt-2">
                             <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
+                                @php $pActive = request()->routeIs('rapor.perbandingan'); @endphp
+                                <a href="{{ route('rapor.perbandingan') }}" class="flex items-center gap-2 px-4 py-2 text-sm transition-colors {{ $pActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
+                                    <i class="fa-solid fa-chart-line w-4 text-center {{ $pActive ? 'text-teal-600' : 'text-gray-400' }}"></i>Perbandingan Antar Tahun
+                                </a>
+                                <div class="border-t border-gray-100 my-2"></div>
                                 @foreach ($raporYears as $raporYear)
                                     @php $rActive = request()->routeIs('rapor.show') && request()->route('year') == $raporYear; @endphp
                                     <a href="{{ route('rapor.show', $raporYear) }}" class="flex items-center gap-2 px-4 py-2 text-sm transition-colors {{ $rActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
@@ -144,6 +149,10 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="mobile-rapor-list" class="hidden pl-4 space-y-1">
+                            @php $pActive = request()->routeIs('rapor.perbandingan'); @endphp
+                            <a href="{{ route('rapor.perbandingan') }}" class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm {{ $pActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-600 hover:bg-gray-50 hover:text-teal-600' }}">
+                                <i class="fa-solid fa-chart-line w-4 text-center {{ $pActive ? 'text-teal-600' : 'text-gray-400' }}"></i>Perbandingan Antar Tahun
+                            </a>
                             @foreach ($raporYears as $raporYear)
                                 @php $rActive = request()->routeIs('rapor.show') && request()->route('year') == $raporYear; @endphp
                                 <a href="{{ route('rapor.show', $raporYear) }}" class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm {{ $rActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-600 hover:bg-gray-50 hover:text-teal-600' }}">

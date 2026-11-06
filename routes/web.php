@@ -41,7 +41,10 @@ Route::get('/guru/{user}', [GuruPageController::class, 'show'])
 Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan.index');
 Route::get('/jurusan/{jurusan:slug}', [JurusanController::class, 'show'])->name('jurusan.show');
 
-// Rapor Pendidikan (publik) — /rapor-pendidikan/{tahun}
+// Rapor Pendidikan (publik) — perbandingan antar tahun & /rapor-pendidikan/{tahun}
+Route::get('/rapor-pendidikan/perbandingan', [RaporController::class, 'perbandingan'])
+    ->name('rapor.perbandingan');
+
 Route::get('/rapor-pendidikan/{year}', [RaporController::class, 'show'])
     ->whereNumber('year')
     ->name('rapor.show');
