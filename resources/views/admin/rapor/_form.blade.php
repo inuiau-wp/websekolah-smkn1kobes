@@ -38,16 +38,16 @@
 @endphp
 
 <form method="POST" action="{{ $rapor->exists ? route('admin.rapor-pendidikan.update', $rapor) : route('admin.rapor-pendidikan.store') }}"
-      class="space-y-6" x-data="{
-        tab: 'akademik',
+      class="space-y-6" x-data='{
+        tab: "akademik",
         kpi: @json($initKpi),
         sections: @json($initSections),
         indicators: @json($initIndicators),
-        addKpi() { this.kpi.push({ key: '', label: '', value: '', suffix: '', kategori: 'Baik', tren: '', tren_note: '' }) },
-        addItem(group) { this.sections[group].push({ title: '', skor: '', kategori: 'Baik', catatan: '', poin: '' }) },
-        addIndicator() { this.indicators.push({ kode: '', indikator: '', capaian: '', status: 'Baik', narasi: '' }) },
+        addKpi() { this.kpi.push({ key: "", label: "", value: "", suffix: "", kategori: "Baik", tren: "", tren_note: "" }) },
+        addItem(group) { this.sections[group].push({ title: "", skor: "", kategori: "Baik", catatan: "", poin: "" }) },
+        addIndicator() { this.indicators.push({ kode: "", indikator: "", capaian: "", status: "Baik", narasi: "" }) },
         removeAt(list, i) { if (list.length > 1) { list.splice(i, 1) } },
-    }">
+    }'>
     @csrf
     @if ($rapor->exists)
         @method('PATCH')
@@ -283,7 +283,7 @@
         <h2 class="font-bold text-gray-900">Visualisasi Data <span class="text-red-500">*</span></h2>
 
         <div class="rounded-lg border border-gray-200 p-4 space-y-3"
-             x-data="{ sebelum: @json($initBar['label_sebelum']), sesudah: @json($initBar['label_sesudah']) }">
+             x-data='{ sebelum: @json($initBar["label_sebelum"]), sesudah: @json($initBar["label_sesudah"]) }'>
             <h3 class="text-sm font-semibold text-gray-700">
                 Grafik Batang — Perbandingan Capaian
                 <span class="text-teal-700 font-mono" x-text="sebelum || '…'"></span> vs

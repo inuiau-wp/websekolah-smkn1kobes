@@ -197,6 +197,13 @@ class AdminRaporPendidikanTest extends TestCase
         $edit->assertSee('Kata Pengantar & Komitmen Transparansi');
         $edit->assertSee('Katalog Indikator yang Dipublikasikan');
         $edit->assertSee('Penafian Hukum');
+
+        // Regresi: @json() di dalam atribut x-data harus memakai kutip TUNGGAL —
+        // kutip ganda akan terpotong oleh kutip struktur JSON (Alpine gagal init,
+        // sisa JS bocor tampil sebagai teks di halaman).
+        $raw = $edit->getContent();
+        $this->assertStringContainsString("x-data='{", $raw);
+        $this->assertStringNotContainsString('x-data="{', $raw);
     }
 
     /**
