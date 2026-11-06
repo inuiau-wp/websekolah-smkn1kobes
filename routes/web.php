@@ -71,6 +71,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('gallery', App\Http\Controllers\Admin\GalleryController::class)
         ->except(['show']); // detail foto = lightbox di halaman publik
 
+    // Fase 8i-lanjutan — template & impor Rapor Pendidikan
+    Route::get('rapor-pendidikan/template/{format}', [RaporPendidikanController::class, 'template'])
+        ->whereIn('format', ['md', 'csv'])
+        ->name('rapor-pendidikan.template');
+    Route::post('rapor-pendidikan/import', [RaporPendidikanController::class, 'import'])
+        ->name('rapor-pendidikan.import');
+
     // Fase 8i — Kelola Rapor Pendidikan (publikasi etis per tahun)
     Route::resource('rapor-pendidikan', RaporPendidikanController::class)
         ->except(['show'])

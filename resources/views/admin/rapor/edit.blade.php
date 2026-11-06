@@ -12,5 +12,7 @@
         @endif
     </div>
 
+    @include('admin.rapor._upload')
+
     @include('admin.rapor._form')
 </x-admin-layout>

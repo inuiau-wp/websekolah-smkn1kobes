@@ -3,6 +3,11 @@
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Kelola Rapor Pendidikan</h1>
             <p class="text-gray-600 mt-1">Publikasi etis capaian per tahun rilis — muncul di menu navbar "Rapor Pendidikan" (dropdown Tahun Rapor).</p>
+            <p class="text-xs text-gray-400 mt-1">
+                Unduh template input:
+                <a href="{{ route('admin.rapor-pendidikan.template', ['format' => 'md']) }}" class="font-medium text-teal-700 hover:underline">Markdown (.md)</a> ·
+                <a href="{{ route('admin.rapor-pendidikan.template', ['format' => 'csv']) }}" class="font-medium text-teal-700 hover:underline">CSV (.csv)</a>
+            </p>
         </div>
         <a href="{{ route('admin.rapor-pendidikan.create') }}"
            class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition">

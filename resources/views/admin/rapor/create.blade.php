@@ -4,5 +4,7 @@
         <p class="text-gray-600 mt-1">Isi data capaian untuk satu tahun rilis. Publikasikan setelah data lengkap &amp; diverifikasi.</p>
     </div>
 
+    @include('admin.rapor._upload')
+
     @include('admin.rapor._form')
 </x-admin-layout>

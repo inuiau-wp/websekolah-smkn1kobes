@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\RaporPendidikan;
+use App\Services\RaporTemplate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use InvalidArgumentException;
 
 class RaporPendidikanController extends Controller
 {
@@ -39,6 +42,7 @@ class RaporPendidikanController extends Controller
         $rapor->is_published = $request->boolean('is_published');
         $rapor->data = $this->buildData($request);
         $rapor->save();
+        session()->forget('rapor_import');
 
         return redirect()->route('admin.rapor-pendidikan.index')
             ->with('status', 'Rapor Pendidikan tahun '.$rapor->year.' berhasil dibuat.');
@@ -63,6 +67,7 @@ class RaporPendidikanController extends Controller
         $rapor_pendidikan->is_published = $request->boolean('is_published');
         $rapor_pendidikan->data = $this->buildData($request);
         $rapor_pendidikan->save();
+        session()->forget('rapor_import');
 
         return redirect()->route('admin.rapor-pendidikan.index')
             ->with('status', 'Rapor Pendidikan tahun '.$rapor_pendidikan->year.' berhasil diperbarui.');
@@ -78,6 +83,62 @@ class RaporPendidikanController extends Controller
 
         return redirect()->route('admin.rapor-pendidikan.index')
             ->with('status', 'Rapor Pendidikan tahun '.$year.' berhasil dihapus.');
+    }
+
+    /**
+     * Unduh template input Rapor Pendidikan (md|csv).
+     * Query ?year=YYYY mengekspor template terisi dari data tahun tersebut.
+     */
+    public function template(Request $request, string $format): Response
+    {
+        $rapor = null;
+        if (filled($request->query('year'))) {
+            $rapor = RaporPendidikan::where('year', (int) $request->query('year'))->first();
+        }
+
+        $content = $format === 'csv' ? RaporTemplate::csv($rapor) : RaporTemplate::md($rapor);
+        $suffix = $rapor ? '-'.$rapor->year : '';
+
+        return response($content, 200, [
+            'Content-Type' => $format === 'csv' ? 'text/csv; charset=UTF-8' : 'text/markdown; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="template-rapor-pendidikan'.$suffix.'.'.$format.'"',
+        ]);
+    }
+
+    /**
+     * Impor file template (.md/.csv): parse lalu isi form Tambah/Edit untuk direviu.
+     */
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'max:2048'],
+        ], [
+            'file.required' => 'Pilih file template (.md atau .csv) terlebih dahulu.',
+            'file.max' => 'Ukuran file maksimal 2 MB.',
+        ]);
+
+        $file = $request->file('file');
+        $extension = strtolower((string) $file->getClientOriginalExtension());
+
+        if (! in_array($extension, ['md', 'markdown', 'csv', 'txt'], true)) {
+            return back()->withErrors(['file' => 'Format file tidak dikenali. Gunakan template .md atau .csv yang dapat diunduh di halaman ini.']);
+        }
+
+        try {
+            $parsed = RaporTemplate::parse((string) file_get_contents((string) $file->getRealPath()), $extension);
+        } catch (InvalidArgumentException $e) {
+            return back()->withErrors(['file' => $e->getMessage()]);
+        }
+
+        session()->put('rapor_import', $parsed);
+
+        $target = route('admin.rapor-pendidikan.create');
+        if ($request->input('context') === 'edit') {
+            $rapor = RaporPendidikan::find($request->input('rapor_id'));
+            $target = $rapor ? route('admin.rapor-pendidikan.edit', $rapor) : route('admin.rapor-pendidikan.create');
+        }
+
+        return redirect($target);
     }
 
     /**

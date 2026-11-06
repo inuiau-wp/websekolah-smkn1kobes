@@ -3,35 +3,36 @@
      sehingga apa yang diinput admin persis apa yang tampil di output publik. --}}
 @php
     $data = $rapor->data ?? [];
+    $import = session('rapor_import');
 
     $blankKpi = ['key' => '', 'label' => '', 'value' => '', 'suffix' => '', 'kategori' => 'Baik', 'tren' => '', 'tren_note' => ''];
-    $initKpi = old('kpi', $data['kpi'] ?? [$blankKpi]);
+    $initKpi = old('kpi', $import['kpi'] ?? $data['kpi'] ?? [$blankKpi]);
 
     $blankItem = ['title' => '', 'skor' => '', 'kategori' => 'Baik', 'catatan' => '', 'poin' => ''];
     $toForm = fn (array $items): array => collect($items)
         ->map(fn (array $i): array => ['title' => $i['title'] ?? '', 'skor' => (string) ($i['skor'] ?? ''), 'kategori' => $i['kategori'] ?? 'Baik', 'catatan' => $i['catatan'] ?? '', 'poin' => is_array($i['poin'] ?? null) ? implode("\n", $i['poin']) : (string) ($i['poin'] ?? '')])
         ->all();
 
-    $initSections = old('sections', [
+    $initSections = old('sections', $import['sections'] ?? [
         'akademik' => $toForm($data['sections']['akademik'] ?? [$blankItem]),
         'vokasi' => $toForm($data['sections']['vokasi'] ?? [$blankItem]),
         'kelola' => $toForm($data['sections']['kelola'] ?? [$blankItem]),
     ]);
 
     $initBar = [
-        'labels' => old('bar_labels', implode(', ', $data['charts']['bar']['labels'] ?? [])),
-        'label_sebelum' => old('bar_label_sebelum', $data['charts']['bar']['label_sebelum'] ?? ''),
-        'label_sesudah' => old('bar_label_sesudah', $data['charts']['bar']['label_sesudah'] ?? ''),
-        'sebelum' => old('bar_sebelum', implode(', ', $data['charts']['bar']['sebelum'] ?? [])),
-        'sesudah' => old('bar_sesudah', implode(', ', $data['charts']['bar']['sesudah'] ?? [])),
+        'labels' => old('bar_labels', $import['bar_labels'] ?? implode(', ', $data['charts']['bar']['labels'] ?? [])),
+        'label_sebelum' => old('bar_label_sebelum', $import['bar_label_sebelum'] ?? $data['charts']['bar']['label_sebelum'] ?? ''),
+        'label_sesudah' => old('bar_label_sesudah', $import['bar_label_sesudah'] ?? $data['charts']['bar']['label_sesudah'] ?? ''),
+        'sebelum' => old('bar_sebelum', $import['bar_sebelum'] ?? implode(', ', $data['charts']['bar']['sebelum'] ?? [])),
+        'sesudah' => old('bar_sesudah', $import['bar_sesudah'] ?? implode(', ', $data['charts']['bar']['sesudah'] ?? [])),
     ];
     $initRadar = [
-        'labels' => old('radar_labels', implode(', ', $data['charts']['radar']['labels'] ?? [])),
-        'values' => old('radar_values', implode(', ', $data['charts']['radar']['values'] ?? [])),
+        'labels' => old('radar_labels', $import['radar_labels'] ?? implode(', ', $data['charts']['radar']['labels'] ?? [])),
+        'values' => old('radar_values', $import['radar_values'] ?? implode(', ', $data['charts']['radar']['values'] ?? [])),
     ];
 
     $blankIndicator = ['kode' => '', 'indikator' => '', 'capaian' => '', 'status' => 'Baik', 'narasi' => ''];
-    $initIndicators = old('indicators', $data['indicators'] ?? [$blankIndicator]);
+    $initIndicators = old('indicators', $import['indicators'] ?? $data['indicators'] ?? [$blankIndicator]);
 
     $kategoriOptions = ['Sangat Baik', 'Baik', 'Aman', 'Sedang', 'Cukup', 'Perlu Perhatian', 'Rendah'];
     $inputClass = 'block w-full rounded-lg border-gray-300 focus:border-teal-600 focus:ring-teal-600 text-sm';
@@ -53,6 +54,13 @@
         @method('PATCH')
     @endif
 
+    @if (session('rapor_import'))
+        <div class="rounded-lg border border-teal-200 bg-teal-50 p-4">
+            <p class="text-sm font-semibold text-teal-900">Data dari template berhasil dimuat ke form.</p>
+            <p class="text-xs text-teal-800 mt-1">Periksa &amp; revisi setiap bagian di bawah, lalu klik Simpan. Data impor tetap terisi sampai rapor disimpan.</p>
+        </div>
+    @endif
+
     <!-- Identitas Rapor (hero halaman publik) -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-5">
         <div>
@@ -62,14 +70,14 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
                 <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Tahun Rilis <span class="text-red-500">*</span></label>
-                <input id="year" name="year" type="number" min="2000" max="2100" required value="{{ old('year', $rapor->year) }}"
+                <input id="year" name="year" type="number" min="2000" max="2100" required value="{{ old('year', $import['year'] ?? $rapor->year) }}"
                        placeholder="Contoh: 2025" class="{{ $inputClass }}">
                 <p class="mt-1 text-xs text-gray-400">Satu tahun hanya satu rapor.</p>
                 @error('year') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
             <div class="md:col-span-2">
                 <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Halaman (hero h1) <span class="text-red-500">*</span></label>
-                <input id="title" name="title" type="text" required value="{{ old('title', $rapor->title) }}"
+                <input id="title" name="title" type="text" required value="{{ old('title', $import['title'] ?? $rapor->title) }}"
                        placeholder="Contoh: Laporan Transparansi Mutu & Relevansi Vokasi SMKN 1 Kota Besi (Capaian Rapor Pendidikan 2025)" class="{{ $inputClass }}">
                 @error('title') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
@@ -77,7 +85,7 @@
 
         <label class="inline-flex items-center gap-2 cursor-pointer">
             <input type="hidden" name="is_published" value="0">
-            <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $rapor->is_published))
+            <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $import['is_published'] ?? $rapor->is_published))
                    class="rounded border-gray-300 text-teal-600 focus:ring-teal-600">
             <span class="text-sm font-medium text-gray-700">Publikasikan (tampil di navbar & halaman publik)</span>
         </label>
@@ -90,7 +98,7 @@
         <p class="text-xs text-gray-400">Paragraf pembuka di bawah hero — jelaskan kepatuhan UU KIP No. 14/2008 dan UU PDP No. 27/2022.</p>
         <textarea id="intro" name="intro" rows="4" required
                   placeholder="Sebagai bentuk tanggung jawab publik dan kepatuhan terhadap UU No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik..."
-                  class="{{ $inputClass }}">{{ old('intro', $rapor->intro) }}</textarea>
+                  class="{{ $inputClass }}">{{ old('intro', $import['intro'] ?? $rapor->intro) }}</textarea>
         @error('intro') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
     </div>
 
@@ -381,7 +389,7 @@
         <p class="text-xs text-gray-400">Tampil di kotak kuning bawah halaman publik, diikuti tautan PPID ke halaman Kontak &amp; Lokasi.</p>
         <textarea id="disclaimer" name="disclaimer" rows="4" required
                   placeholder="Seluruh data diekstraksi dari Laporan Rapor Pendidikan Kemendikdasmen RI dalam bentuk agregasi makro institusi..."
-                  class="{{ $inputClass }}">{{ old('disclaimer', $rapor->disclaimer) }}</textarea>
+                  class="{{ $inputClass }}">{{ old('disclaimer', $import['disclaimer'] ?? $rapor->disclaimer) }}</textarea>
         @error('disclaimer') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
     </div>
 
