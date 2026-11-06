@@ -53,9 +53,14 @@
                         {{ number_format((float) $kpi['value'], 2, ',', '.') }}{{ $kpi['suffix'] ?? '' }}
                     </p>
                     @if (! empty($kpi['tren']))
+                        @php($trenTurun = str_starts_with(ltrim((string) $kpi['tren']), '-'))
                         <p class="mt-2 text-sm">
-                            <span class="inline-flex items-center gap-1 font-semibold text-emerald-600">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            <span class="inline-flex items-center gap-1 font-semibold {{ $trenTurun ? 'text-rose-600' : 'text-emerald-600' }}">
+                                @if ($trenTurun)
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                                @else
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                @endif
                                 {{ $kpi['tren'] }}
                             </span>
                             <span class="text-gray-500">{{ $kpi['tren_note'] }}</span>

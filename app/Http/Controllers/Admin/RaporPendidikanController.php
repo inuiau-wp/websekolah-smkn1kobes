@@ -107,6 +107,7 @@ class RaporPendidikanController extends Controller
     {
         $validated = $request->validate([
             'kpi' => ['required', 'array', 'min:1', 'max:8'],
+            'kpi.*.key' => ['nullable', 'string', 'max:50', 'regex:/^[a-z0-9_]+$/'],
             'kpi.*.label' => ['required', 'string', 'max:100'],
             'kpi.*.value' => ['required', 'numeric', 'min:0', 'max:100'],
             'kpi.*.suffix' => ['nullable', 'string', 'max:10'],
@@ -140,6 +141,7 @@ class RaporPendidikanController extends Controller
             'indicators.*.narasi' => ['required', 'string', 'max:1000'],
         ], [
             'kpi.required' => 'Minimal satu KPI harus diisi.',
+            'kpi.*.key.regex' => 'Key KPI hanya boleh huruf kecil, angka, dan garis bawah (contoh: literasi).',
             'sections.*.*.title.required' => 'Judul setiap kartu dimensi wajib diisi.',
             'sections.*.*.catatan.required' => 'Catatan setiap kartu dimensi wajib diisi.',
             'indicators.*.indikator.required' => 'Nama indikator wajib diisi.',
@@ -165,7 +167,7 @@ class RaporPendidikanController extends Controller
         return [
             'kpi' => collect($validated['kpi'])
                 ->map(fn (array $item): array => [
-                    'key' => 'kpi_'.md5($item['label'].$item['value']),
+                    'key' => filled($item['key'] ?? null) ? $item['key'] : 'kpi_'.md5($item['label'].$item['value']),
                     'label' => $item['label'],
                     'value' => (float) $item['value'],
                     'suffix' => $item['suffix'] ?? '',

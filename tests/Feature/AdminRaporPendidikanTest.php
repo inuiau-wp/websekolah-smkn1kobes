@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\RaporPendidikan;
 use App\Models\User;
+use Database\Seeders\RaporPendidikanSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -89,6 +90,7 @@ class AdminRaporPendidikanTest extends TestCase
         $rapor = RaporPendidikan::where('year', 2026)->firstOrFail();
         $this->assertTrue($rapor->is_published);
         $this->assertSame(78.10, $rapor->data['kpi'][0]['value']);
+        $this->assertStringStartsWith('kpi_', $rapor->data['kpi'][0]['key']); // key kosong -> otomatis
         $this->assertSame(['Literasi', 'Numerasi'], $rapor->data['charts']['bar']['labels']);
         $this->assertSame([75.53, 58.57], $rapor->data['charts']['bar']['sebelum']);
         $this->assertSame(['Penguatan literasi digital.', 'Program membaca rutin.'], $rapor->data['sections']['akademik'][0]['poin']);
@@ -187,5 +189,80 @@ class AdminRaporPendidikanTest extends TestCase
         $edit = $this->actingAs($admin)->get(route('admin.rapor-pendidikan.edit', $rapor));
         $edit->assertOk();
         $edit->assertSee('Literasi'); // data lama terisi di form
+
+        // Struktur form mengikuti halaman publik rapor/show.blade.php
+        $edit->assertSee('Mutu Akademik');
+        $edit->assertSee('Vokasi & Industri');
+        $edit->assertSee('Iklim Sekolah & Tata Kelola');
+        $edit->assertSee('Kata Pengantar & Komitmen Transparansi');
+        $edit->assertSee('Katalog Indikator yang Dipublikasikan');
+        $edit->assertSee('Penafian Hukum');
+    }
+
+    /**
+     * Susun payload persis seperti yang dikirim form admin dari struktur `data` yang ada.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    private function payloadFromData(array $data): array
+    {
+        return [
+            'kpi' => collect($data['kpi'])->map(fn (array $k): array => [
+                'key' => $k['key'] ?? '',
+                'label' => $k['label'],
+                'value' => (string) $k['value'],
+                'suffix' => $k['suffix'] ?? '',
+                'kategori' => $k['kategori'],
+                'tren' => $k['tren'] ?? '',
+                'tren_note' => $k['tren_note'] ?? '',
+            ])->all(),
+            'sections' => collect($data['sections'])->map(fn (array $items): array => collect($items)->map(fn (array $i): array => [
+                'title' => $i['title'],
+                'skor' => $i['skor'],
+                'kategori' => $i['kategori'],
+                'catatan' => $i['catatan'],
+                'poin' => implode("\n", $i['poin'] ?? []),
+            ])->all())->all(),
+            'bar_labels' => implode(', ', $data['charts']['bar']['labels']),
+            'bar_label_sebelum' => $data['charts']['bar']['label_sebelum'],
+            'bar_label_sesudah' => $data['charts']['bar']['label_sesudah'],
+            'bar_sebelum' => implode(', ', $data['charts']['bar']['sebelum']),
+            'bar_sesudah' => implode(', ', $data['charts']['bar']['sesudah']),
+            'radar_labels' => implode(', ', $data['charts']['radar']['labels']),
+            'radar_values' => implode(', ', $data['charts']['radar']['values']),
+            'indicators' => collect($data['indicators'])->map(fn (array $i): array => [
+                'kode' => $i['kode'],
+                'indikator' => $i['indikator'],
+                'capaian' => $i['capaian'],
+                'status' => $i['status'],
+                'narasi' => $i['narasi'],
+            ])->all(),
+        ];
+    }
+
+    public function test_edit_round_trips_seeded_data_without_loss(): void
+    {
+        $this->seed(RaporPendidikanSeeder::class);
+        $rapor = RaporPendidikan::where('year', 2025)->firstOrFail();
+        $original = $rapor->data;
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        $payload = array_merge([
+            'year' => $rapor->year,
+            'title' => $rapor->title,
+            'intro' => $rapor->intro,
+            'disclaimer' => $rapor->disclaimer,
+            'is_published' => '1',
+        ], $this->payloadFromData($original));
+
+        $this->actingAs($admin)->patch(route('admin.rapor-pendidikan.update', $rapor), $payload)
+            ->assertRedirect(route('admin.rapor-pendidikan.index'));
+
+        $rapor->refresh();
+        // Key KPI asli (literasi, numerasi, ...) harus bertahan — bukan diganti md5 otomatis
+        $this->assertSame(['literasi', 'numerasi', 'dudi', 'keamanan'], array_column($rapor->data['kpi'], 'key'));
+        // Simpan ulang via form tidak boleh mengubah apa pun di halaman publik
+        $this->assertSame($original, $rapor->data);
     }
 }
