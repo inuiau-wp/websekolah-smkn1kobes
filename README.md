@@ -1,60 +1,108 @@
+<div align="center">
+
 # Web SMKN 1 Kota Besi
 
-Website resmi **SMKN 1 Kotabesi** — portal informasi sekolah dengan 3 jurusan unggulan dan dashboard multi-role untuk pengelolaan konten.
+**Website resmi SMKN 1 Kotabesi** — portal informasi sekolah dan dashboard pengelolaan konten multi-role.
 
-## Fitur Utama
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=flat-square&logo=php&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL%2FMariaDB-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Petunjuk Pengujian](https://img.shields.io/badge/Tes-182_lulus-16A34A?style=flat-square)
 
-### Halaman Publik
-- **Beranda** — hero, carousel kegiatan, statistik sekolah, kartu 3 jurusan, berita & galeri unggulan
-- **Profil Sekolah** `/profil` — visi-misi, dewan guru (dengan tombol *Kunjungi Halaman* ke halaman pribadi guru), cover & logo dinamis
-- **Jurusan** `/jurusan` — ATP, TKJ, AKL: deskripsi, kompetensi, visi-misi, kepala jurusan
-- **Berita & Pengumuman** `/berita` — filter kategori: Berita, Pengumuman, Agenda, **Modul Materi**, **Tutorial**
-- **Galeri** `/galeri` & **Kontak** `/kontak` (map lokasi + pesan masuk ke admin)
-- **Halaman Pribadi Guru** `/guru/{id}` — biodata (tanpa NIP), CV tertulis guru, prestasi, artikel/modul guru
+</div>
 
-### Dashboard Multi-Role
+---
+
+## Daftar Isi
+
+- [Halaman Publik](#halaman-publik)
+- [Dashboard Multi-Role](#dashboard-multi-role)
+- [Sistem Posting](#sistem-posting)
+- [Teknologi](#teknologi)
+- [Instalasi Lokal](#instalasi-lokal)
+- [Struktur Proyek](#struktur-proyek)
+- [Keamanan](#keamanan)
+- [Deploy ke Hosting Bersama](#deploy-ke-hosting-bersama)
+
+---
+
+## Halaman Publik
+
+| Halaman | Rute | Isi |
+|---|---|---|
+| 🏠 **Beranda** | `/` | Hero, carousel kegiatan, statistik sekolah, kartu 3 jurusan, berita & galeri unggulan |
+| ℹ️ **Profil Sekolah** | `/profil` | Visi & misi, sejarah, akreditasi, dewan guru (dengan tautan ke halaman pribadi guru) |
+| 🎓 **Jurusan** | `/jurusan` | ATP, TKJ, AKL: deskripsi, kompetensi, visi & misi, kepala jurusan |
+| 📰 **Berita** | `/berita` | Filter kategori: Berita, Pengumuman, Agenda, Modul Materi, Tutorial |
+| 📷 **Galeri** | `/galeri` | Album kegiatan sekolah |
+| 📞 **Kontak** | `/kontak` | Peta lokasi dan form pesan masuk ke admin |
+| 👤 **Halaman Guru** | `/guru/{id}` | Biodata (tanpa NIP), CV tertulis, prestasi, artikel & modul guru |
+
+## Dashboard Multi-Role
+
 | Role | Kemampuan |
 |---|---|
-| **Admin** | Kelola konten home, profile sekolah (logo, cover, koordinat map), jurusan, berita, galeri, pesan kontak, akun guru/siswa |
-| **Guru** | Berita/modul milik sendiri, galeri, jurusan yang dipimpin (kepala program), halaman pribadi (CV, prestasi, headline) |
-| **Siswa** | Pengumuman & agenda sekolah |
+| 🛡️ **Admin** | Konten beranda, profil sekolah (logo, cover, koordinat peta), jurusan, berita, galeri, pesan kontak, akun guru & siswa |
+| 📚 **Guru** | Mengelola berita/modul miliknya, galeri, jurusan yang dipimpin (kepala program), halaman pribadi (CV, prestasi, headline) |
+| ✏️ **Siswa** | Melihat pengumuman & agenda sekolah |
 
-### Sistem Posting Berita
-- Rich text editor **TinyMCE** (format, tabel, blok kode, perataan, ukuran gambar)
-- Kategori: Berita · Pengumuman · Agenda · **Modul Materi** · **Tutorial**
-- Lampiran materi: **.md** (dikonversi ke editor) · **.pdf** (ter-embed) · **.docx** (tombol unduh)
-- Upload gambar konten (jpg/png/webp/bmp/avif) + paste screenshot
-- Embed **YouTube/Vimeo** (paste link) & **post Instagram** (tombol Embed)
-- Konten disanitasi otomatis saat disimpan (anti-XSS)
+## Sistem Posting
+
+- Rich text editor **TinyMCE 7** dengan format, tabel, blok kode, perataan, dan ukuran gambar
+- **Lampiran materi**: `.md` dikonversi otomatis ke editor, `.pdf` tampil ter-embed, `.docx` punya tombol unduh
+- Upload gambar (jpg/png/webp/bmp/avif) plus tempel langsung tangkapan layar
+- **Embed untuk konten**: paste tautan YouTube/Vimeo, atau tombol Embed untuk post Instagram
+- HTML disanitasi saat disimpan, sehingga konten tidak membawa skrip berbahaya (anti-XSS)
 
 ## Teknologi
-- Laravel 13 (PHP 8.3+) + Blade + Tailwind CSS v4
-- TinyMCE 7, league/commonmark (Markdown→HTML), Vite
-- MySQL/MariaDB — auth via Laravel Breeze
-- Tests: PHPUnit/Pest — 158 pengujian
+
+![Laravel](https://img.shields.io/badge/Laravel_13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Blade](https://img.shields.io/badge/Blade-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![TinyMCE](https://img.shields.io/badge/TinyMCE_7-22BBDF?style=for-the-badge&logo=tinymce&logoColor=white)
+![CommonMark](https://img.shields.io/badge/league%2Fcommonmark-4B8BBE?style=for-the-badge)
+![MySQL](https://img.shields.io/badge/MySQL%2FMariaDB-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Breeze](https://img.shields.io/badge/Auth-Laravel_Breeze-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Pengujian](https://img.shields.io/badge/Tes_182_lulus-16A34A?style=for-the-badge&logo=pest&logoColor=white)
 
 ## Instalasi Lokal
+
 ```bash
 composer install
 npm install
-cp .env.example .env   # isi DB, lalu:
+cp .env.example .env    # isi kredensial DB, lalu:
 php artisan key:generate
-php artisan migrate --seed   # seed 3 jurusan + 1 admin
+php artisan migrate --seed    # seed 3 jurusan (ATP, TKJ, AKL) + 1 admin
 php artisan storage:link
-npm run dev        # aset dev
-# atau:
-npm run build      # aset produksi
+npm run dev         # aset untuk pengembangan
+# atau
+npm run build       # aset untuk produksi
 ```
-URL lokal: `http://smkn1kotabesi.test` (FlyEnv + Apache2)
 
-## Struktur Ringkas
+Target lokal: `http://smkn1kotabesi.test` (FlyEnv + Apache2).
+Produksi: `https://smkn1kotabesi.sch.id`.
+
+## Struktur Proyek
+
 ```
 app/Http/Controllers/Admin|Guru|Siswa   # dashboard per role
-resources/views                         # Blade (publik + dashboard)
+resources/views                         # Blade (halaman publik + dashboard)
 routes/web.php                          # rute publik & dashboard
-DATABASE.md, DEPLOY.md, DESAIN.md       # dokumentasi internal (tidak di-publish)
+DATABASE.md, DEPLOY.md, DESAIN.md       # dokumentasi internal (tidak dipublikasikan)
 ```
 
 ## Keamanan
-- Password default seeder hanya untuk lokasi dev (`migrate --seed`); ganti segera di produksi
-- `.env` tidak pernah disertakan dalam repo — buat manual di server
+
+- Password default pada seeder hanya untuk lingkungan dev (`migrate --seed`); sudahi segera saat produksi
+- `.env` tidak pernah ikut dalam repo; buat manual di server, lalu jalankan `config:cache`
+
+## Deploy ke Hosting Bersama
+
+Panduan lengkap ada di [DEPLOY.md](DEPLOY.md). Ringkasannya:
+
+1. Jalankan `npm run build` lokal, lalu unggah proyek via FTP (FileZilla), kecuali `node_modules/`
+2. Arahkan document root server ke `public/`
+3. Buat `.env` di server dengan `APP_KEY` dan kredensial produksi
+4. Pastikan `storage/` dan `bootstrap/cache/` dapat ditulis, lalu jalankan `migrate --force`
