@@ -72,6 +72,8 @@
                 @endif
             </div>
         </div>
+    </section>
+
     {{-- Sejarah: ukur baca editorial, satu kolom nyaman dibaca --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div class="max-w-3xl">
@@ -122,6 +124,8 @@
                 </div>
             </div>
         </div>
+    </section>
+
     {{-- Pendidik & Tenaga Kependidikan --}}
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         @php
@@ -207,6 +211,8 @@
                 @endforeach
             </div>
         @endif
+    </section>
+
     {{-- Kontak: pita gelap penutup, CTA spesifik dan hanya jika data ada --}}
     <section class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14 flex flex-col md:flex-row md:items-center gap-8">
@@ -214,23 +220,23 @@
                 <h2 class="text-xl font-bold mb-4">Informasi Sekolah</h2>
                 <ul class="space-y-3 text-white/80 text-sm">
                     <li class="flex gap-3 items-start">
-                        <span class="w-5 text-center text-white/50 shrink-0" aria-hidden="true">Alamat</span>
+                        <span class="w-16 shrink-0 font-medium text-white/60">Alamat</span>
                         <span>{{ $profil->address ?? 'Alamat sekolah akan diisi dari dashboard admin.' }}</span>
                     </li>
                     @if ($profil->phone)
                         <li class="flex gap-3 items-center">
-                            <span class="w-5 text-center text-white/50 shrink-0" aria-hidden="true">Telp</span>
+                            <span class="w-16 shrink-0 font-medium text-white/60">Telepon</span>
                             <a href="tel:{{ preg_replace('/[^0-9+]/', '', $profil->phone) }}" class="hover:text-white hover:underline underline-offset-4">{{ $profil->phone }}</a>
                         </li>
                     @endif
                     @if ($profil->email)
                         <li class="flex gap-3 items-center">
-                            <span class="w-5 text-center text-white/50 shrink-0" aria-hidden="true">Surel</span>
+                            <span class="w-16 shrink-0 font-medium text-white/60">Email</span>
                             <a href="mailto:{{ $profil->email }}" class="hover:text-white hover:underline underline-offset-4">{{ $profil->email }}</a>
                         </li>
                     @endif
                     <li class="flex gap-3 items-center">
-                        <span class="w-5 text-center text-white/50 shrink-0" aria-hidden="true">Galeri</span>
+                        <span class="w-16 shrink-0 font-medium text-white/60">Galeri</span>
                         <a href="{{ route('gallery.index') }}" class="hover:text-white hover:underline underline-offset-4">Lihat aktivitas di halaman Galeri</a>
                     </li>
                 </ul>
