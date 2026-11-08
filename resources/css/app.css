@@ -14,6 +14,23 @@
 /* Alpine.js — sembunyikan elemen x-cloak sampai Alpine aktif (tab rapor admin/publik) */
 [x-cloak] { display: none !important; }
 
+/* R-39 antislop — affordance dasar global: pointer untuk kontrol, focus ring terlihat */
+@layer base {
+    a[href], button:not(:disabled), summary, select:not(:disabled),
+    label:has(> input), [role="button"]:not([aria-disabled="true"]), option {
+        cursor: pointer;
+    }
+
+    button:disabled, select:disabled, [aria-disabled="true"] {
+        cursor: not-allowed;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-teal-600);
+        outline-offset: 2px;
+    }
+}
+
 /* Fase 8h — tampilan konten rich text berita (TinyMCE/Markdown → HTML) */
 .news-content {
     @apply text-gray-600 leading-relaxed text-[15px];

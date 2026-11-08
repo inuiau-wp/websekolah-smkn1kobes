@@ -80,13 +80,13 @@ class SchoolProfileCoverTest extends TestCase
         $response->assertDontSee('images.unsplash.com', false);
     }
 
-    public function test_public_profile_falls_back_to_gradient_without_cover(): void
+    public function test_public_profile_falls_back_to_solid_panel_without_cover(): void
     {
         SchoolProfile::find(1)?->update(['cover_path' => null]) ?? SchoolProfile::create(['school_name' => 'SMKN 1 Kotabesi']);
 
         $this->get(route('profil'))
             ->assertOk()
             ->assertDontSee('images.unsplash.com', false)
-            ->assertSee('linear-gradient(135deg, #1c398e', false);
+            ->assertDontSee('linear-gradient(135deg, #1c398e', false);
     }
 }
