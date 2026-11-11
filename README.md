@@ -44,6 +44,12 @@
 | 📊 **Rapor Pendidikan** | `/rapor-pendidikan/{tahun}` | Data mutu per tahun (hanya tahun yang dipublikasikan): KPI, tab mutu akademik/vokasi/iklim, grafik, tabel indikator dengan pencarian, disclaimer referensi PPID |
 | 📊 **Perbandingan Rapor** | `/rapor-pendidikan/perbandingan` | Grafik garis antar tahun, dibangun otomatis dari semua tahun terpublikasi |
 
+## Catatan Pengembangan Terbaru
+
+- **Navbar dropdown** (`Jurusan` & `Rapor Pendidikan`): dropdown hanya muncul saat pointer hover pada tombol menu, bukan di area bebas di bawah navbar. Wrapper dropdown menggunakan `pointer-events-none` dan tombol diberi `pt-2 pb-2` sebagai jembatan hover agar transisi ke dalam dropdown lancar tanpa celah.
+- **Halaman Profil Sekolah**: visi & misi disusun vertikal (atas bawah) pada semua ukuran layar, bukan berdampingan (kiri kanan) di layar sedang ke atas.
+- **`.gitignore`**: semua file Excel data rapor pendidikan (`*.xlsx`, `*.xls`) diabaikan dan tidak ikut ter-commit.
+
 ## Dashboard Multi-Role
 
 | Role | Kemampuan |
