@@ -34,8 +34,8 @@
     <section class="py-12 lg:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
-            <!-- Visi & Misi -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Visi & Misi (disediarkan secara vertikal, atas bawah) -->
+            <div class="grid grid-cols-1 gap-8">
                 <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700">

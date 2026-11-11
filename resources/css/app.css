@@ -29,6 +29,13 @@
         outline: 2px solid var(--color-teal-600);
         outline-offset: 2px;
     }
+
+    /* Umpan balik tekanan global: cukup halus untuk frekuensi harian (R-39). */
+    a[href]:active, button:not(:disabled):active, summary:active,
+    select:not(:disabled):active, [role="button"]:not([aria-disabled="true"]):active {
+        transform: scale(0.97);
+        transition: transform 160ms ease-out;
+    }
 }
 
 /* Fase 8h — tampilan konten rich text berita (TinyMCE/Markdown → HTML) */

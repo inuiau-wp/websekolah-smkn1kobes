@@ -58,6 +58,12 @@
                 <!-- Lightbox (Alpine.js) -->
                 <div x-show="lightbox !== null" x-cloak
                      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+                     x-transition:enter="ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="ease-in duration-200"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
                      @keydown.escape.window="lightbox = null"
                      @click.self="lightbox = null">
                     <button type="button" @click="lightbox = null"
@@ -73,9 +79,15 @@
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
 
-                    <template x-if="lightbox !== null">
-                        <figure class="max-w-4xl w-full text-center"
-                                x-data="{
+                    <div x-show="lightbox !== null"
+                         x-transition:enter="ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="ease-in duration-150"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="max-w-4xl w-full text-center">
+                        <figure x-data="{
                                     photos: @js($photos->map(fn ($p) => ['src' => $p->imageSrc(), 'title' => $p->title, 'category' => $p->category])),
                                 }">
                             <img :src="photos[lightbox].src" :alt="photos[lightbox].title"
@@ -85,7 +97,7 @@
                                 <span class="block text-white/60 text-sm" x-text="photos[lightbox].category"></span>
                             </figcaption>
                         </figure>
-                    </template>
+                    </div>
                 </div>
             @endif
         </div>

@@ -91,7 +91,13 @@
             </div>
 
             {{-- Form tambah --}}
-            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3">
+            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
                 <form method="POST" action="{{ route('admin.home.store', 'slides') }}" enctype="multipart/form-data" class="space-y-3">
                     @csrf
                     <input type="hidden" name="sort" value="{{ $slides->max('sort') + 1 }}">
@@ -123,7 +129,13 @@
 
                         {{-- Form edit inline --}}
                         <form method="POST" action="{{ route('admin.home.update', ['slides', $slide->id]) }}"
-                              enctype="multipart/form-data" x-show="editId === {{ $slide->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                              enctype="multipart/form-data" x-show="editId === {{ $slide->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2"
+                                   x-transition:enter="ease-out duration-200"
+                                   x-transition:enter-start="opacity-0 -translate-y-1"
+                                   x-transition:enter-end="opacity-100 translate-y-0"
+                                   x-transition:leave="ease-in duration-150"
+                                   x-transition:leave-start="opacity-100"
+                                   x-transition:leave-end="opacity-0">
                             @csrf @method('PATCH')
                             <input name="title" required value="{{ $slide->title }}" class="block w-full rounded-lg border-gray-300 text-sm">
                             <input name="description" value="{{ $slide->description }}" placeholder="Keterangan" class="block w-full rounded-lg border-gray-300 text-sm">
@@ -150,7 +162,13 @@
                 <button @click="open = !open; editId = null" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-900 text-white">+ Tambah</button>
             </div>
 
-            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4">
+            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
                 <form method="POST" action="{{ route('admin.home.store', 'statistics') }}" class="flex gap-3 items-end">
                     @csrf
                     <input type="hidden" name="sort" value="{{ $statistics->max('sort') + 1 }}">
@@ -183,7 +201,13 @@
                         </div>
 
                         <form method="POST" action="{{ route('admin.home.update', ['statistics', $stat->id]) }}"
-                              x-show="editId === {{ $stat->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 flex gap-2 items-end">
+                              x-show="editId === {{ $stat->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 flex gap-2 items-end"
+                                  x-transition:enter="ease-out duration-200"
+                                  x-transition:enter-start="opacity-0 -translate-y-1"
+                                  x-transition:enter-end="opacity-100 translate-y-0"
+                                  x-transition:leave="ease-in duration-150"
+                                  x-transition:leave-start="opacity-100"
+                                  x-transition:leave-end="opacity-0">
                             @csrf @method('PATCH')
                             <div class="flex-1">
                                 <input name="label" value="{{ $stat->label }}" class="block w-full rounded-lg border-gray-300 text-sm">
@@ -210,7 +234,13 @@
                 <button @click="open = !open; editId = null" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-900 text-white">+ Tambah</button>
             </div>
 
-            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3">
+            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
                 <form method="POST" action="{{ route('admin.home.store', 'testimonials') }}" enctype="multipart/form-data" class="space-y-3">
                     @csrf
                     <input type="hidden" name="sort" value="{{ $testimonials->max('sort') + 1 }}">
@@ -248,7 +278,13 @@
                         </div>
 
                         <form method="POST" action="{{ route('admin.home.update', ['testimonials', $item->id]) }}"
-                              enctype="multipart/form-data" x-show="editId === {{ $item->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                              enctype="multipart/form-data" x-show="editId === {{ $item->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2"
+                                   x-transition:enter="ease-out duration-200"
+                                   x-transition:enter-start="opacity-0 -translate-y-1"
+                                   x-transition:enter-end="opacity-100 translate-y-0"
+                                   x-transition:leave="ease-in duration-150"
+                                   x-transition:leave-start="opacity-100"
+                                   x-transition:leave-end="opacity-0">
                             @csrf @method('PATCH')
                             <div class="flex gap-2">
                                 <input name="name" required value="{{ $item->name }}" class="block flex-1 rounded-lg border-gray-300 text-sm">
@@ -278,7 +314,13 @@
                 <button @click="open = !open; editId = null" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-900 text-white">+ Tambah</button>
             </div>
 
-            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3">
+            <div x-show="open" x-cloak class="mb-4 border border-dashed border-gray-300 rounded-lg p-4 space-y-3"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
                 <form method="POST" action="{{ route('admin.home.store', 'partners') }}" enctype="multipart/form-data" class="space-y-3">
                     @csrf
                     <input type="hidden" name="sort" value="{{ $partners->max('sort') + 1 }}">
@@ -316,7 +358,13 @@
                         </div>
 
                         <form method="POST" action="{{ route('admin.home.update', ['partners', $partner->id]) }}"
-                              enctype="multipart/form-data" x-show="editId === {{ $partner->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                              enctype="multipart/form-data" x-show="editId === {{ $partner->id }}" x-cloak class="mt-3 pt-3 border-t border-gray-100 space-y-2"
+                                   x-transition:enter="ease-out duration-200"
+                                   x-transition:enter-start="opacity-0 -translate-y-1"
+                                   x-transition:enter-end="opacity-100 translate-y-0"
+                                   x-transition:leave="ease-in duration-150"
+                                   x-transition:leave-start="opacity-100"
+                                   x-transition:leave-end="opacity-0">
                             @csrf @method('PATCH')
                             <input name="name" required value="{{ $partner->name }}" class="block w-full rounded-lg border-gray-300 text-sm">
                             <input name="url" value="{{ $partner->url }}" placeholder="Website" class="block w-full rounded-lg border-gray-300 text-sm">

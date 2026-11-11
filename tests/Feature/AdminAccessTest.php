@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\ContactMessage;
+use App\Models\News;
+use App\Models\RaporPendidikan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,6 +21,52 @@ class AdminAccessTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Ringkasan');
+    }
+
+    public function test_admin_dashboard_shows_full_content_summary(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $author = User::factory()->create(['role' => 'guru', 'name' => 'Pak Budi']);
+
+        $berita = News::factory()->create([
+            'title' => 'Juara LKS Tingkat Provinsi',
+            'category' => 'news',
+            'status' => 'published',
+            'author_id' => $author->id,
+        ]);
+        News::factory()->create(['title' => 'Modul Jaringan Dasar', 'category' => 'materi', 'status' => 'draft']);
+        ContactMessage::factory()->create([
+            'name' => 'Ibu Sari',
+            'subject' => 'Pendaftaran PPDB 2026',
+            'is_read' => false,
+        ]);
+        RaporPendidikan::create([
+            'year' => 2026,
+            'is_published' => false,
+            'data' => ['kpi' => [], 'sections' => [], 'charts' => [], 'indicators' => []],
+        ]);
+        User::factory()->count(3)->create(['role' => 'guru']);
+        User::factory()->count(2)->create(['role' => 'siswa']);
+
+        $this->actingAs($admin)->get(route('admin.dashboard'))
+            ->assertOk()
+            // Perlu perhatian
+            ->assertSee('1 pesan belum dibaca')
+            ->assertSee('1 berita masih draf')
+            ->assertSee('1 tahun rapor belum dipublikasikan')
+            // Berita terbaru + chip status
+            ->assertSee('Juara LKS Tingkat Provinsi')
+            ->assertSee('Pak Budi')
+            ->assertSee('Modul Jaringan Dasar')
+            // Pesan terbaru
+            ->assertSee('Pendaftaran PPDB 2026')
+            ->assertSee('Ibu Sari')
+            // Kartu akun & rapor
+            ->assertSee('Akun terdaftar')
+            ->assertSee('Rapor Pendidikan terpublikasi')
+            // Grafik kategori: label + data JSON
+            ->assertSee('chart-kategori')
+            ->assertSee('Modul Materi');
     }
 
     public function test_non_admin_gets_404_on_admin_dashboard(): void

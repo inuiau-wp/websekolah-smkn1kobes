@@ -169,7 +169,10 @@
         </div>
 
         <!-- Tab: Mutu Akademik -->
-        <div x-show="tab === 'akademik'" class="space-y-3" role="tabpanel">
+        <div x-show="tab === 'akademik'" class="space-y-3" role="tabpanel"
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-[0.98]"
+             x-transition:enter-end="opacity-100 scale-100">
             <template x-for="(item, i) in sections.akademik" :key="'akademik-' + i">
                 <div class="rounded-lg border border-gray-200 p-4 space-y-3">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -208,7 +211,10 @@
         </div>
 
         <!-- Tab: Vokasi & Industri -->
-        <div x-show="tab === 'vokasi'" class="space-y-3" role="tabpanel" x-cloak>
+        <div x-show="tab === 'vokasi'" class="space-y-3" role="tabpanel" x-cloak
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-[0.98]"
+             x-transition:enter-end="opacity-100 scale-100">
             <template x-for="(item, i) in sections.vokasi" :key="'vokasi-' + i">
                 <div class="rounded-lg border border-gray-200 p-4 space-y-3">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -247,7 +253,10 @@
         </div>
 
         <!-- Tab: Iklim Sekolah & Tata Kelola -->
-        <div x-show="tab === 'kelola'" class="space-y-3" role="tabpanel" x-cloak>
+        <div x-show="tab === 'kelola'" class="space-y-3" role="tabpanel" x-cloak
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-[0.98]"
+             x-transition:enter-end="opacity-100 scale-100">
             <template x-for="(item, i) in sections.kelola" :key="'kelola-' + i">
                 <div class="rounded-lg border border-gray-200 p-4 space-y-3">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">

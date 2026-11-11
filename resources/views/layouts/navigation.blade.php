@@ -38,13 +38,13 @@
 
                 <!-- Jurusan dropdown -->
                 <div class="relative group">
-                    <button class="{{ $navLink(request()->routeIs('jurusan.*')) }}">
+                    <button class="{{ $navLink(request()->routeIs('jurusan.*')) }} pt-2 pb-2">
                         <i class="fa-solid fa-graduation-cap w-4 text-center"></i>Jurusan
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <!-- Wrapper nempel ke tombol (pt-2 = jembatan hover, bukan gap) -->
-                    <div class="absolute left-0 top-full pt-2">
-                        <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
+                    <!-- Dropdown mulai tepat di bawah tombol (top-full, tanpa overlap). Wrapper pakai pointer-events-none agar area di bawah navbar (belum disentuh tombol) tidak memicu dropdown. pb-2 pada tombol adalah jembatan hover yang tetap dalam batas tombol. -->
+                    <div class="absolute left-0 top-full pointer-events-none">
+                        <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 opacity-0 scale-95 pointer-events-none origin-top transition duration-200 ease-out motion-reduce:duration-75 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100 group-focus-within:pointer-events-auto">
                         @foreach($jurusan as $j)
                             @php $jActive = request()->routeIs('jurusan.show') && request()->route('jurusan')?->slug === $j->slug; @endphp
                             <a href="{{ route('jurusan.show', $j->slug) }}" class="flex items-center gap-2 px-4 py-2 text-sm transition-colors {{ $jActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
@@ -65,12 +65,12 @@
                 @if ($raporYears->isNotEmpty())
                     <!-- Rapor Pendidikan dropdown (tahun rilis) -->
                     <div class="relative group">
-                        <button class="{{ $navLink(request()->routeIs('rapor.*')) }}">
+                        <button class="{{ $navLink(request()->routeIs('rapor.*')) }} pt-2 pb-2">
                             <i class="fa-solid fa-ranking-star w-4 text-center"></i>Rapor Pendidikan
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <div class="absolute left-0 top-full pt-2">
-                            <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 hidden group-hover:block group-focus-within:block">
+                        <div class="absolute left-0 top-full pointer-events-none">
+                            <div class="w-56 bg-white rounded-md shadow-lg border border-gray-200 py-2 opacity-0 scale-95 pointer-events-none origin-top transition duration-200 ease-out motion-reduce:duration-75 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100 group-focus-within:pointer-events-auto">
                                 @php $pActive = request()->routeIs('rapor.perbandingan'); @endphp
                                 <a href="{{ route('rapor.perbandingan') }}" class="flex items-center gap-2 px-4 py-2 text-sm transition-colors {{ $pActive ? 'bg-teal-50 text-teal-700 font-semibold' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
                                     <i class="fa-solid fa-chart-line w-4 text-center {{ $pActive ? 'text-teal-600' : 'text-gray-400' }}"></i>Perbandingan Antar Tahun

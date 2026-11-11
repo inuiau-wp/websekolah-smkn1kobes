@@ -80,7 +80,11 @@
         </div>
 
         @foreach (['akademik', 'vokasi', 'kelola'] as $tabKey)
-            <div x-show="tab === '{{ $tabKey }}'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div x-show="tab === '{{ $tabKey }}'"
+                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-[0.98]"
+                 x-transition:enter-end="opacity-100 scale-100">
                 @forelse ($rapor->data['sections'][$tabKey] ?? [] as $item)
                     <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col">
                         <div class="flex items-start justify-between gap-3 mb-3">

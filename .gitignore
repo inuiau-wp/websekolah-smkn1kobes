@@ -55,3 +55,7 @@ Thumbs.db
 # Dokumen panduan internal
 /PANDUAN_RAPOR_PENDIDIKAN_2025.md
 
+# File Excel data rapor pendidikan (tidak di-publish)
+*.xlsx
+*.xls
+
